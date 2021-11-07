@@ -8,8 +8,9 @@
    padding: 20px 10px;
 }
 
-.reviews-container h1 {
-   margin-bottom: 0px;
+.reviews-movie {
+   margin-bottom: 20px;
+   font-size: 24px;
 }
 
 .reviews-card {
@@ -36,6 +37,7 @@
    width: 13px;
    height: 15px;
 }
+
 .review-header h1 {
    font-size: 16px;
    margin-bottom: 0px;
@@ -50,4 +52,20 @@
    border-radius: 4px;
    font-size: 16px;
    color: #9e9e9e;
+}
+
+@media (min-width: 1200px) {
+   .reviews-container {
+      padding: 40px 10px;
+   }
+
+   .reviews-movie {
+      margin-bottom: 25px;
+      font-size: 48px;
+   }
+
+   .reviews-card {
+      margin-top: 30px;
+   }
+
 }

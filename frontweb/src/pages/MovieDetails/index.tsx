@@ -6,6 +6,8 @@ import { useParams } from 'react-router';
 import { Review } from 'types/review';
 import { requestBackend } from 'utils/requests';
 import Star from 'assets/images/star-img.png';
+import NewReview from './NewReview';
+import { hasAnyRoles } from 'utils/auth';
 
 type UrlParams = {
    movieId: string;
@@ -27,14 +29,18 @@ const MovieDetails = function () {
       requestBackend(config).then((response) => {
          setReviews(response.data);
       });
-   }, [movieId]);
+   }, [movieId, reviews]);
 
    return (
       <div className="movie-reviews">
          <div className="reviews-container">
-            <h1>Tela detalhes do filme id: {movieId}</h1>
+            <h1 className="reviews-movie">
+               Tela detalhes do filme id: {movieId}
+            </h1>
 
-            {reviews.length > 0 &&
+            {hasAnyRoles(['ROLE_MEMBER']) && <NewReview movieId={movieId} />}
+
+            {reviews?.length > 0 && (
                <div className="reviews-card">
                   {reviews?.map((review) => {
                      return (
@@ -48,7 +54,7 @@ const MovieDetails = function () {
                      );
                   })}
                </div>
-            }
+            )}
          </div>
       </div>
    );
