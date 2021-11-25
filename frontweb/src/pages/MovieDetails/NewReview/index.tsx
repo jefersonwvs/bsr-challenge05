@@ -17,7 +17,11 @@ const NewReview = function (props: Props) {
    const { movieId } = props;
 
    /** Hook para gerenciamento do formulário */
-   const { register, handleSubmit } = useForm<FormData>();
+   const {
+      register,
+      handleSubmit,
+      formState: { errors },
+   } = useForm<FormData>();
 
    /**
     * onSubmit: função executada ao clicar com o mouse ou ao teclar enter
@@ -55,12 +59,19 @@ const NewReview = function (props: Props) {
       <form className="review-form-card" onSubmit={handleSubmit(onSubmit)}>
          <div className="mb-4">
             <input
+               {...register('text', {
+                  required: 'Campo vazio',
+               })}
                type="text"
-               className="form-control base-input review-text"
+               className={`form-control base-input review-text ${
+                  errors.text ? 'is-invalid' : ''
+               }`}
                placeholder="Deixe sua avaliação aqui"
-               {...register('text')}
                name="text"
             />
+            <div className="invalid-feedback d-block">
+               {errors.text?.message}
+            </div>
          </div>
          <div className="btn-review-submit">
             <Button text="Salvar publicação" />

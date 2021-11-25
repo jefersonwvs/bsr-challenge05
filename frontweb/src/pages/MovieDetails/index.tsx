@@ -29,7 +29,7 @@ const MovieDetails = function () {
       requestBackend(config).then((response) => {
          setReviews(response.data);
       });
-   }, [movieId, reviews]);
+   }, [movieId]);
 
    return (
       <div className="movie-reviews">
@@ -38,7 +38,7 @@ const MovieDetails = function () {
                Tela detalhes do filme id: {movieId}
             </h1>
 
-            {hasAnyRoles(['ROLE_MEMBER']) && <NewReview movieId={movieId} />}
+            {hasAnyRoles(['ROLE_MEMBER']) && <NewReview movieId={movieId}/>}
 
             {reviews?.length > 0 && (
                <div className="reviews-card">

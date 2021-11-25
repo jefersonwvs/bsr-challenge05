@@ -21,6 +21,18 @@
    height: 50px;
 }
 
+.login-error {
+   text-align: justify;
+   margin-bottom: 25px;
+   padding: 6px 12px;
+}
+
+.invalid-feedback {
+   padding-right: 6px;
+   text-align: right;
+   color: white;
+}
+
 @media (min-width: 576px) {
    .login-card {
       padding: 75px 40px 120px 40px;

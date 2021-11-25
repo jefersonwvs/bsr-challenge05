@@ -19,6 +19,10 @@
    font-size: 18px;
 }
 
+.catalog-movies a:hover {
+   font-weight: bold;
+}
+
 @media(min-width: 1200px) {
    .catalog-container {
       padding: 40px;
