@@ -9,18 +9,17 @@ import { AuthContext, AuthContextData } from 'AuthContext';
  * Função principal a ser renderizada.
  */
 const App = function () {
-   
-   const [authContextData, setAuthContextData] = useState<AuthContextData>({
-      authenticated: false,
-   });
+  const [authContextData, setAuthContextData] = useState<AuthContextData>({
+    authenticated: false,
+  });
 
-   const authContextType = {authContextData, setAuthContextData};
+  const authContextType = { authContextData, setAuthContextData };
 
-   return (
-      <AuthContext.Provider value={authContextType}>
-         <Routes />
-      </AuthContext.Provider>
-   );
+  return (
+    <AuthContext.Provider value={authContextType}>
+      <Routes />
+    </AuthContext.Provider>
+  );
 };
 
 export default App;

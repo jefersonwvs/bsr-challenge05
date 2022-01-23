@@ -5,8 +5,8 @@ import { TokenData } from 'utils/auth';
  * Tipo de objeto que armazena um estado global
  */
 export type AuthContextData = {
-   authenticated: boolean;
-   tokenData?: TokenData;
+  authenticated: boolean;
+  tokenData?: TokenData;
 };
 
 /**
@@ -15,8 +15,8 @@ export type AuthContextData = {
  * setAuthContextData = função que altera o dado
  */
 export type AuthContextType = {
-   authContextData: AuthContextData;
-   setAuthContextData: (authContextData: AuthContextData) => void;
+  authContextData: AuthContextData;
+  setAuthContextData: (authContextData: AuthContextData) => void;
 };
 
 /**
@@ -28,8 +28,8 @@ export type AuthContextType = {
       </AuthContext.Provider>
  */
 export const AuthContext = createContext<AuthContextType>({
-   authContextData: {
-      authenticated: false,
-   },
-   setAuthContextData: () => null,
+  authContextData: {
+    authenticated: false,
+  },
+  setAuthContextData: () => null,
 });

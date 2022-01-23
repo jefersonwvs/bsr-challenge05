@@ -7,8 +7,8 @@ import App from './App'; // importação do componente raiz
  * na página index.html.
  */
 ReactDOM.render(
-   <React.StrictMode>
-      <App />
-   </React.StrictMode>,
-   document.getElementById('root')
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
 );
