@@ -1,6 +1,7 @@
 import { getAuthData } from './storage';
+import history from './history';
 import qs from 'qs';
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 /**
  * URL do backend
@@ -86,29 +87,29 @@ export const requestBackend = (config: AxiosRequestConfig) => {
   return axios(config);
 };
 
-// /**
-//  * Interceptador de requisição.
-//  */
-// axios.interceptors.request.use(
-//   (config) => {
-//     return config;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   }
-// );
+/**
+ * Interceptador de requisição.
+ */
+axios.interceptors.request.use(
+  (config) => {
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
-// /**
-//  * Interceptador de resposta.
-//  */
-// axios.interceptors.response.use(
-//   (response: AxiosResponse) => {
-//     return response;
-//   },
-//   (error: AxiosError) => {
-//     if (error.response?.status === 401) {
-//       history.push('/admin/auth/login');
-//     }
-//     return Promise.reject(error);
-//   }
-// );
+/**
+ * Interceptador de resposta.
+ */
+axios.interceptors.response.use(
+  (response: AxiosResponse) => {
+    return response;
+  },
+  (error: AxiosError) => {
+    if (error.response?.status === 401) {
+      history.push('/auth/login');
+    }
+    return Promise.reject(error);
+  }
+);
