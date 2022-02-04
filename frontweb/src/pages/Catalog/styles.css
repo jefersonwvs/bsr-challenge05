@@ -1,6 +1,8 @@
 .catalog-container {
   height: 100%;
   padding: 15px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .catalog-container h1 {
@@ -9,17 +11,17 @@
   margin-bottom: 50px;
 }
 
-.catalog-movies {
+.catalog-movies-container {
   display: flex;
   flex-direction: column;
 }
 
-.catalog-movies a {
+.catalog-movies-container a {
   color: #fff;
   font-size: 18px;
 }
 
-.catalog-movies a:hover {
+.catalog-movies-container a:hover {
   font-weight: bold;
 }
 
@@ -33,7 +35,7 @@
     margin-bottom: 40px;
   }
 
-  .catalog-movies a {
+  .catalog-movies-container a {
     font-size: 24px;
   }
 }
