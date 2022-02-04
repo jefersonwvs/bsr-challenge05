@@ -1,26 +1,37 @@
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { AxiosRequestConfig } from 'axios';
 
 import { Movie } from 'types/movie';
 import MovieCard from 'components/MovieCard';
+import { SpringPage } from 'types/vendor/spring';
+import { requestBackend } from 'utils/requests';
 
 import './styles.css';
 
 const Catalog = function () {
   //
-  const movie: Movie = {
-    id: 1,
-    title: 'Bob Esponja',
-    subTitle: 'O Incrível Resgate',
-    year: 2020,
-    imgUrl:
-      'https://image.tmdb.org/t/p/w533_and_h300_bestv2/wu1uilmhM4TdluKi2ytfz8gidHf.jpg',
-    synopsis:
-      'Onde está Gary? Segundo Bob Esponja, Gary foi "caracolstrado" pelo temível Rei Poseidon e levado para a cidade perdida de Atlantic City. Junto a Patrick Estrela, ele sai em uma missão de resgate ao querido amigo, e nesta jornada os dois vão conhecer novos personagens e viver inimagináveis aventuras.',
-    genre: {
-      id: 1,
-      name: 'Comédia',
-    },
-  };
+  const [page, setPage] = useState<SpringPage<Movie>>();
+
+  useEffect(() => {
+    const config: AxiosRequestConfig = {
+      withCredentials: true,
+      url: '/movies',
+      params: {
+        page: 0,
+        size: 50,
+      },
+    };
+
+    requestBackend(config)
+      .then((response) => {
+        setPage(response.data as SpringPage<Movie>);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    //
+  }, []);
 
   return (
     <div className="catalog-container">
@@ -29,46 +40,16 @@ const Catalog = function () {
       </div>
 
       <div className="row">
-        <div className="col-sm-6 col-xl-3 catalog-movie-card-container">
-          <Link to={`/movies/${movie.id}`}>
-            <MovieCard movie={movie} />
-          </Link>
-        </div>
-        <div className="col-sm-6 col-xl-3 catalog-movie-card-container">
-          <Link to={`/movies/${movie.id}`}>
-            <MovieCard movie={movie} />
-          </Link>
-        </div>
-        <div className="col-sm-6 col-xl-3 catalog-movie-card-container">
-          <Link to={`/movies/${movie.id}`}>
-            <MovieCard movie={movie} />
-          </Link>
-        </div>
-        <div className="col-sm-6 col-xl-3 catalog-movie-card-container">
-          <Link to={`/movies/${movie.id}`}>
-            <MovieCard movie={movie} />
-          </Link>
-        </div>
-        <div className="col-sm-6 col-xl-3 catalog-movie-card-container">
-          <Link to={`/movies/${movie.id}`}>
-            <MovieCard movie={movie} />
-          </Link>
-        </div>
-        <div className="col-sm-6 col-xl-3 catalog-movie-card-container">
-          <Link to={`/movies/${movie.id}`}>
-            <MovieCard movie={movie} />
-          </Link>
-        </div>
-        <div className="col-sm-6 col-xl-3 catalog-movie-card-container">
-          <Link to={`/movies/${movie.id}`}>
-            <MovieCard movie={movie} />
-          </Link>
-        </div>
-        <div className="col-sm-6 col-xl-3 catalog-movie-card-container">
-          <Link to={`/movies/${movie.id}`}>
-            <MovieCard movie={movie} />
-          </Link>
-        </div>
+        {page?.content.map((movie) => (
+          <div
+            className="col-sm-6 col-xl-3 catalog-movie-card-container"
+            key={movie.id}
+          >
+            <Link to={`/movies/${movie.id}`}>
+              <MovieCard movie={movie} />
+            </Link>
+          </div>
+        ))}
       </div>
     </div>
   );
