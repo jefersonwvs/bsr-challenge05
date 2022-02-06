@@ -1,0 +1,33 @@
+.movie-filter-container {
+  padding: 5px 20px;
+  margin-bottom: 20px;
+}
+
+.movie-filter-genre__control {
+  background-color: #6c6c6c !important;
+  font-size: 1em;
+  height: 50px;
+  letter-spacing: -0.015em;
+  color: #e1e1e1 !important;
+  border: 1px solid #e1e1e1 !important;
+  max-width: 260px;
+}
+
+.movie-filter-genre__single-value {
+  color: #e1e1e1 !important;
+}
+
+.movie-filter-genre__placeholder {
+  color: #9e9e9e !important;
+}
+
+.movie-filter-genre__indicator-separator {
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  .movie-filter-container {
+    padding: 15px 20px;
+    margin-bottom: 20px;
+  }
+}

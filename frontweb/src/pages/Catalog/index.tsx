@@ -6,6 +6,7 @@ import { Movie } from 'types/movie';
 import MovieCard from 'components/MovieCard';
 import { SpringPage } from 'types/vendor/spring';
 import { requestBackend } from 'utils/requests';
+import MovieFilter from 'components/MovieFilter';
 
 import './styles.css';
 
@@ -35,9 +36,7 @@ const Catalog = function () {
 
   return (
     <div className="catalog-container">
-      <div className="catalog-searchbar-container base-card">
-        <h1>Searchbar</h1>
-      </div>
+      <MovieFilter />
 
       <div className="row">
         {page?.content.map((movie) => (
