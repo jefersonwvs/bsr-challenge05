@@ -7,6 +7,7 @@ import MovieCard from 'components/MovieCard';
 import { SpringPage } from 'types/vendor/spring';
 import { requestBackend } from 'utils/requests';
 import MovieFilter, { MovieFilterData } from 'components/MovieFilter';
+import Pagination from 'components/Pagination';
 
 import './styles.css';
 
@@ -79,15 +80,16 @@ const Catalog = function () {
 
       <div className="row">
         {page?.content.map((movie) => (
-          <div
-            className="col-sm-6 col-xl-3 catalog-movie-card-container"
-            key={movie.id}
-          >
+          <div className="col-sm-6 col-xl-3" key={movie.id}>
             <Link to={`/movies/${movie.id}`}>
               <MovieCard movie={movie} />
             </Link>
           </div>
         ))}
+      </div>
+
+      <div className="pagination-container">
+        <Pagination />
       </div>
     </div>
   );
