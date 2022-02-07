@@ -2,21 +2,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0px;
+  list-style-type: none;
+}
+
+.pagination-arrow {
+  color: #ffc700;
 }
 
 .pagination-arrow-previous {
   margin-right: 5px;
-  color: #9e9e9e;
 }
 
 .pagination-arrow-next {
   transform: rotate(180deg);
   margin-left: 5px;
-  color: #9e9e9e;
 }
 
-.pagination-arrow-enabled {
-  color: #ffc700;
+.pagination-arrow-inactive {
+  color: #9e9e9e !important;
 }
 
 .pagination-item {

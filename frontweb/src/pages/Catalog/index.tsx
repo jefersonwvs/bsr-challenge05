@@ -17,12 +17,13 @@ import './styles.css';
  * resultados renderizados serão diferentes.
  */
 type ControlComponentsData = {
+  activePage: number;
   filterData: MovieFilterData;
 };
 
 const Catalog = function () {
   /**
-   * Página Spring de `movie` carregada a partir do back-end.
+   * Página Spring de `movies` carregada a partir do back-end.
    */
   const [page, setPage] = useState<SpringPage<Movie>>();
 
@@ -30,7 +31,10 @@ const Catalog = function () {
    * Dados de controle do componente.
    */
   const [controlComponentsData, setControlComponentsData] =
-    useState<ControlComponentsData>({ filterData: { genre: null } });
+    useState<ControlComponentsData>({
+      activePage: 0,
+      filterData: { genre: null },
+    });
 
   /**
    * Função que, por fazer uso de um `hook`, está restrita ao
@@ -44,8 +48,8 @@ const Catalog = function () {
       method: 'GET',
       url: '/movies',
       params: {
-        page: 0,
-        size: 50, // CHANGE later
+        page: controlComponentsData.activePage,
+        size: 12,
         genreId: controlComponentsData.filterData.genre?.id,
       },
       withCredentials: true,
@@ -66,12 +70,24 @@ const Catalog = function () {
   }, [getMovies]);
 
   /**
-   * Função que é executada novos dados de filtragem são submetidos,
+   * Função que é executada quando novos dados de filtragem são submetidos,
    * para que a listagem de filmes seja atualizada.
    * @param filterData dados de filtragem
    */
   const handleSubmitFilter = function (filterData: MovieFilterData) {
-    setControlComponentsData({ filterData });
+    setControlComponentsData({ activePage: 0, filterData });
+  };
+
+  /**
+   * Função que é executada quando o usuário clica para trocar o número da
+   * página carregada.
+   * @param pageNumber número da página a ser carregada
+   */
+  const handlePageChange = function (pageNumber: number) {
+    setControlComponentsData({
+      activePage: pageNumber,
+      filterData: controlComponentsData.filterData,
+    });
   };
 
   return (
@@ -89,7 +105,12 @@ const Catalog = function () {
       </div>
 
       <div className="pagination-container">
-        <Pagination />
+        <Pagination
+          forcePage={page?.number}
+          pageCount={page ? page?.totalPages : 0}
+          range={3}
+          onChange={handlePageChange}
+        />
       </div>
     </div>
   );

@@ -25,6 +25,10 @@
   display: none;
 }
 
+.movie-filter-genre__menu {
+  max-width: 260px;
+}
+
 @media (min-width: 1200px) {
   .movie-filter-container {
     padding: 15px 20px;
