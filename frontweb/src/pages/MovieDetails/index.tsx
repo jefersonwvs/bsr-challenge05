@@ -10,6 +10,7 @@ import { requestBackend } from 'utils/requests';
 import Star from 'assets/images/star-img.png';
 import { hasAnyRoles } from 'utils/auth';
 import Button from 'components/Button';
+import { Movie } from 'types/movie';
 
 /**
  * Tipo de dados para armazenar parâmetros de URL.
@@ -31,6 +32,8 @@ const MovieDetails = function () {
    */
   const { movieId } = useParams<UrlParams>();
 
+  const [movie, setMovie] = useState<Movie>();
+
   /**
    * Hooks de estado para gerenciar lista de reviews do filme
    * acessado.
@@ -46,6 +49,18 @@ const MovieDetails = function () {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
+
+  useEffect(() => {
+    const config: AxiosRequestConfig = {
+      method: 'GET',
+      url: `/movies/${movieId}`,
+      withCredentials: true, // requisição autorizada
+    };
+
+    requestBackend(config).then((response) => {
+      setMovie(response.data as Movie);
+    });
+  }, [movieId]);
 
   /**
    * Hook para realizar requisições.
@@ -97,10 +112,20 @@ const MovieDetails = function () {
   };
 
   return (
-    <div className="movie-reviews">
-      <div className="reviews-container">
-        <h1 className="reviews-movie">Tela detalhes do filme id: {movieId}</h1>
+    <div className="movie-details-container">
+      <div className="base-card movie-details-card">
+        <div className="movie-details-card-img-container">
+          <img src={movie?.imgUrl} alt={movie?.title} />
+        </div>
+        <div className="movie-details-card-content-container">
+          <h1 className="movie-details-title">{movie?.title}</h1>
+          <h2 className="movie-details-year">{movie?.year}</h2>
+          <h3 className="movie-details-subtitle">{movie?.subTitle}</h3>
+          <p className="movie-details-synopsis">{movie?.synopsis}</p>
+        </div>
+      </div>
 
+      <div className="reviews-container">
         {hasAnyRoles(['ROLE_MEMBER']) && (
           <form className="review-form-card" onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-4">
