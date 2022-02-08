@@ -57,7 +57,6 @@ const MovieFilter = function (props: Props) {
     requestBackend(config)
       .then((response) => {
         setGenres(response.data as Genre[]);
-        console.log(response.data);
       })
       .catch((error) => {
         console.error(error);
@@ -73,14 +72,17 @@ const MovieFilter = function (props: Props) {
    */
   const onSubmit = function (formData: MovieFilterData) {
     onSubmitFilter(formData);
+    // handleSubmitFilter(formData)
+    //  filterData <- formData
+    //   setControlComponentsData({ activePage: 0, filterData })
   };
 
   /**
    * Função que trata a mudança de gênero do filme.
-   * @param value gênero selecionado
+   * @param genre gênero selecionado
    */
-  const handleChangeGenre = function (value: Genre) {
-    setValue('genre', value);
+  const handleChangeGenre = function (genre: Genre) {
+    setValue('genre', genre);
 
     const formData: MovieFilterData = {
       genre: getValues('genre'),
