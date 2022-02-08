@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 import { AxiosRequestConfig } from 'axios';
+import { toast } from 'react-toastify';
 
 import { Movie } from 'types/movie';
 import MovieCard from 'components/MovieCard';
@@ -46,7 +47,7 @@ const Catalog = function () {
     //
     const config: AxiosRequestConfig = {
       method: 'GET',
-      url: '/movies',
+      url: '/movies1',
       params: {
         page: controlComponentsData.activePage,
         size: 12,
@@ -60,7 +61,10 @@ const Catalog = function () {
         setPage(response.data as SpringPage<Movie>);
       })
       .catch((error) => {
-        console.log(error); // CHANGE later
+        toast.error(
+          'Não foi possível carregar a listagem de filmes. Por favor, tente recarregar a página.',
+          { autoClose: 3000, draggable: false }
+        );
       });
     //
   }, [controlComponentsData]);

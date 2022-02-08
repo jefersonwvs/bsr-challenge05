@@ -4,6 +4,7 @@ import { AxiosRequestConfig } from 'axios';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 import { Review } from 'types/review';
 import { requestBackend } from 'utils/requests';
@@ -11,6 +12,7 @@ import Star from 'assets/images/star-img.png';
 import { hasAnyRoles } from 'utils/auth';
 import Button from 'components/Button';
 import { Movie } from 'types/movie';
+import history from 'utils/history';
 
 /**
  * Tipo de dados para armazenar parâmetros de URL.
@@ -47,6 +49,7 @@ const MovieDetails = function () {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<FormData>();
 
@@ -57,9 +60,17 @@ const MovieDetails = function () {
       withCredentials: true, // requisição autorizada
     };
 
-    requestBackend(config).then((response) => {
-      setMovie(response.data as Movie);
-    });
+    requestBackend(config)
+      .then((response) => {
+        setMovie(response.data as Movie);
+      })
+      .catch((error) => {
+        history.push('/movies');
+        toast.error(`Filme (id ${movieId}) não está cadastrado!`, {
+          autoClose: 3000,
+          draggable: false,
+        });
+      });
   }, [movieId]);
 
   /**
@@ -73,9 +84,16 @@ const MovieDetails = function () {
       withCredentials: true, // requisição autorizada
     };
 
-    requestBackend(config).then((response) => {
-      setReviews(response.data as Review[]);
-    });
+    requestBackend(config)
+      .then((response) => {
+        setReviews(response.data as Review[]);
+      })
+      .catch(() => {
+        toast.error(`Não foi possível carregar as avaliações deste filme! 😟`, {
+          autoClose: 3000,
+          draggable: false,
+        });
+      });
   }, [movieId, countReviews]);
 
   /**
@@ -89,6 +107,8 @@ const MovieDetails = function () {
       movieId,
     };
 
+    setValue('text', '');
+
     /** Parâmetros necessários para fazer requisições com a
      * biblioteca 'axios' */
     const config: AxiosRequestConfig = {
@@ -101,13 +121,17 @@ const MovieDetails = function () {
     /** Requisição ao backend */
     requestBackend(config)
       .then((response) => {
-        // requisição bem sucedida
-        console.log(response.data);
         setCountReviews(countReviews + 1);
+        toast.info('Avaliação cadastrada com sucesso!', {
+          autoClose: 2000,
+          draggable: false,
+        });
       })
       .catch((error) => {
-        // requisição mal sucedida
-        console.log('ERRO! ', error);
+        toast.error('Não foi possível cadastrar sua avaliação!', {
+          autoClose: 3000,
+          draggable: false,
+        });
       });
   };
 
