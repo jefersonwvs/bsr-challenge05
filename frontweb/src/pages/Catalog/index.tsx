@@ -47,7 +47,7 @@ const Catalog = function () {
     //
     const config: AxiosRequestConfig = {
       method: 'GET',
-      url: '/movies1',
+      url: '/movies',
       params: {
         page: controlComponentsData.activePage,
         size: 12,

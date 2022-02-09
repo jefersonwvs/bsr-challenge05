@@ -34,10 +34,14 @@ const MovieDetails = function () {
    */
   const { movieId } = useParams<UrlParams>();
 
+  /**
+   * Hook de estado para armazenar filme a ser carregado na página,
+   * o qual eventualmente será avaliado.
+   */
   const [movie, setMovie] = useState<Movie>();
 
   /**
-   * Hooks de estado para gerenciar lista de reviews do filme
+   * Hooks de estado para armazenar lista de reviews do filme
    * acessado.
    */
   const [reviews, setReviews] = useState<Review[]>([]);
@@ -53,6 +57,10 @@ const MovieDetails = function () {
     formState: { errors },
   } = useForm<FormData>();
 
+  /**
+   * Hook de efeito para requisitar do back-end o filme
+   * a ser avaliado.
+   */
   useEffect(() => {
     const config: AxiosRequestConfig = {
       method: 'GET',
@@ -74,7 +82,8 @@ const MovieDetails = function () {
   }, [movieId]);
 
   /**
-   * Hook para realizar requisições.
+   * Hook de efeito para requisitar ao back-end as avaliações já
+   * cadastradas do filme carregado.
    */
   useEffect(() => {
     /* Parâmetros usados pela biblioteca 'axios' para fazer requisições */
@@ -98,8 +107,7 @@ const MovieDetails = function () {
 
   /**
    * onSubmit: função executada ao clicar com o mouse ou ao teclar enter
-   * --> requisição de login ao backend
-   * */
+   */
   const onSubmit = (formData: FormData) => {
     /** Corpo da requisição */
     const body = {
@@ -107,10 +115,13 @@ const MovieDetails = function () {
       movieId,
     };
 
+    // limpeza do formulário
     setValue('text', '');
 
-    /** Parâmetros necessários para fazer requisições com a
-     * biblioteca 'axios' */
+    /**
+     * Parâmetros necessários para fazer requisições com a
+     * biblioteca 'axios'
+     * */
     const config: AxiosRequestConfig = {
       method: 'POST',
       url: '/reviews',
@@ -122,7 +133,7 @@ const MovieDetails = function () {
     requestBackend(config)
       .then((response) => {
         setCountReviews(countReviews + 1);
-        toast.info('Avaliação cadastrada com sucesso!', {
+        toast.success('Avaliação cadastrada com sucesso!', {
           autoClose: 2000,
           draggable: false,
         });
