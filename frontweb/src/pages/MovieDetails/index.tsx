@@ -180,7 +180,7 @@ const MovieDetails = function () {
               </div>
             </div>
             <div className="btn-review-submit">
-              <Button text="Salvar publicação" />
+              <Button text="Salvar avaliação" />
             </div>
           </form>
         )}
